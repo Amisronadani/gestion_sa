@@ -79,7 +79,11 @@
 
 <header>
     <img src="images/logow_bgf.ico" alt="">
+    <div>
+        
     <button class="logout">Déconnexion</button>
+    </div>
+   
 </header>
 
 <nav>
