@@ -98,21 +98,57 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'assistant') {
 		    .bien{
          padding:10%;
         }
+
+        .user-circle {
+            background-color: darkorange;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;            
+            margin-left:100%;
+            margin-top:50px;
+            position:absolute;
+          }
+          .username-display p {
+            color: white;
+            margin-bottom:80px;
+            font-size: 18px;
+          }
+        #cont {
+              position: absolute;
+              right: 20px; /* Position it 20px from the right side */
+              bottom: 20px; /* Position it 20px from the bottom */
+              width: 120px; /* Set a width for the circle */
+              height: 120px; /* Set a height for the circle */
+              background-color: darkorange; /* Pink background */
+              border-radius: 50%; /* Make it circular */
+              display: flex; /* Use flexbox to center content */
+              align-items: center; /* Center items vertically */
+              justify-content: center; /* Center items horizontally */
+             }
+
+        #cont a {
+                color: white; /* White text */
+                text-decoration: none; /* Remove underline from the link */
+                font-weight: bold; /* Bold text */
+               }
 		</style>
           
       
 </head>
 <body>
     <div class="header">
-     <div>
-        <i class="fas fa-mail-bulk" style="color:white"></i><a href="info@bgf.com" id="a">info@bgf.com</a>
-     </div>
-     <div>
-     <i class="fas fa-clock"style="color:white"></i> Heure du travail: 8.00am - 5.00pm
-     </div>
-     <div>
-        <i class="fas fa-map-marker-alt" style="color:white" ></i> Boulevard de la Liberté, Bujumbura
-     </div>
+      <div>
+          <i class="fas fa-mail-bulk" style="color:white"></i><a href="info@bgf.com" id="a">info@bgf.com</a>
+      </div>
+      <div>
+        <i class="fas fa-clock"style="color:white"></i> Heure du travail: 8.00am - 5.00pm
+      </div>
+      <div>
+          <i class="fas fa-map-marker-alt" style="color:white" ></i> Boulevard de la Liberté, Bujumbura
+      </div>
     </div>
 
       <div class="nav">
@@ -120,22 +156,26 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'assistant') {
          <marquee behavior="" direction="left">Bienvenu dans le service d'assistance</marquee>
          </div> 
 
-         <div menu>
-         <div><a href="index_assistant.php">affiche d'assistant</a></div>
-        
-         <div ><button class="logout"> <a href="Logout.php">Deconnexion</a></button></div>
-         </div>
-      </div>
+         <div class="menu">
+            <div class="user-circle">
+                <i class="fas fa-user" style="font-size: 30px; color: white;"></i>
+            </div>
+            <div class="username-display">
+                <p>Bienvenue, <?= $_SESSION['username'] ?></p>
+            </div>
+            <div>
+                <button class="logout"><a href="Logout.php">Deconnexion</a></button>
+            </div>
+        </div>
+     </div>
 
- </div>
+     <div class="fas fa-arrow-right-arrow-left" id="cont">
+      <a href="index_assistant.php"> Continue </a>
+    </div>
 
- <div>
+    <div>
+      <marquee direction="right"><p>Vous avez accès à l'espace d'assistant.</p></marquee>
+    </div>
 
-</div>
-
-<div>
-<h2 class="bien">Bienvenue assistant : <?= $_SESSION['username'] ?></h2>
-<Marquee direction="right"><p>Vous avez accès à l'espace d'assistant.</p></Marquee>
-</div>
 </body>
 </html>

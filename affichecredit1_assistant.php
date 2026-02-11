@@ -182,7 +182,7 @@ if (isset($_SESSION['error'])) {
             <th>Durée</th>
             <th>Numéro de Compte</th>
             <th>ID Dossier</th>
-            <th>Actions</th>
+            
         </tr>
     </thead>
     <tbody id="clientList">
@@ -196,10 +196,7 @@ if (isset($_SESSION['error'])) {
             <td><?= htmlspecialchars($credit['duree_de_remboursement']) ?> mois</td>
             <td><?= htmlspecialchars($credit['numero_compte']) ?></td>
             <td><?= htmlspecialchars($credit['id_dossier']) ?></td>
-            <td>
-                <a href="modifiercredit.php?id=<?= $credit['numero_credit'] ?>" class="delete">✏️</a>
-                <a href="supprimercredit.php?id=<?= $credit['numero_credit'] ?>" class="modifier">🗑️</a>
-            </td>
+            
         </tr>
         <?php endforeach; ?>
     </tbody>

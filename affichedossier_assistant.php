@@ -206,7 +206,7 @@ if (isset($_SESSION['error'])) {
                 <th>Photo</th>
                 <th>Date de cloture</th>
                 <th>Statut</th>
-                <th colspan="2">Actions</th>
+                
             </tr>
         </thead>
         <tbody id="clientList">
@@ -222,14 +222,8 @@ if (isset($_SESSION['error'])) {
                     </td>
                     <td><?= $dossier['date_de_cloture'] ?></td>
                     <td><?= $dossier['statut_dossier'] ?></td>
-                    <td>
-                        <a href="modifierdossier.php?id=<?= $dossier['id_dossier'] ?>" class="modifier"> ✏️ </a>
-                    </td>
-                    <td>
-                    <form action="?id=<?= $dossier['id_dossier'] ?>" method="POST" style="display:inline;">
-                            <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce compte ?');" class="delete">🗑️</button>
-                        </form>
-                    </td>
+                    
+                    
                 </tr>
             <?php endforeach; ?>
         </tbody>
