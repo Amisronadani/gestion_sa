@@ -86,9 +86,10 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'assistant') {
             cursor: pointer;
             border-radius: 5px;
             transition: background-color 0.3s ease;
-            margin-left:370px;
+            margin-left:55%;
+            margin-top:40px;
             position:absolute;
-        }
+            }
         .logout a{
            text-decoration:none;
         }
@@ -115,6 +116,9 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'assistant') {
             color: white;
             margin-bottom:80px;
             font-size: 18px;
+            margin-left:40%;
+            margin-top:100px;
+            position:absolute;
           }
         #cont {
               position: absolute;
