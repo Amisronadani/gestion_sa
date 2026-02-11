@@ -167,6 +167,25 @@ if (isset($_SESSION['error'])) {
 ?>
 </div>
 
+<?php
+if (isset($_SESSION['date_passe'])) {
+    echo "<div class='alert alert-success' role='alert'>
+            <div class='alert-title'>Succès :</div>
+            <div class='alert-message'>{$_SESSION['date_passe']}</div>
+            <button onclick=\"this.parentElement.style.display='none';\">✖️</button>
+          </div>";
+    unset($_SESSION['date_passe']);
+}
+
+if (isset($_SESSION['depassement'])) {
+    echo "<div class='alert alert-danger' role='alert'>
+            <div class='alert-title'>Attention :</div>
+            <div class='alert-message'>{$_SESSION['depassement']}</div>
+            <button onclick=\"this.parentElement.style.display='none';\">✖️</button>
+          </div>";
+    unset($_SESSION['depassement']);
+}
+?>
      <h1>Gestion des <span>Credit</span></></h1>
     <a href="addcredit_assistant.php" class="ajouter">➕ Ajout Quelque qui demande un credit</a>
     <input type="text" id="search" placeholder="Rechercher...">
@@ -196,7 +215,7 @@ if (isset($_SESSION['error'])) {
             <td><?= htmlspecialchars($credit['duree_de_remboursement']) ?> mois</td>
             <td><?= htmlspecialchars($credit['numero_compte']) ?></td>
             <td><?= htmlspecialchars($credit['id_dossier']) ?></td>
-            
+           
         </tr>
         <?php endforeach; ?>
     </tbody>

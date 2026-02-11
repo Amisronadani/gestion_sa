@@ -20,9 +20,6 @@ $total_stmt = $pdo->query($total_query);
 $total_items = $total_stmt->fetchColumn();
 $total_pages = ceil($total_items / $limit);
 ?>
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

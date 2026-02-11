@@ -1,6 +1,5 @@
 <?php
 include('connexion.php');
-session_start(); // Assurez-vous que la session est démarrée
 ?>
 
 <!DOCTYPE html>
@@ -47,6 +46,7 @@ session_start(); // Assurez-vous que la session est démarrée
             width: 120px; /* Largeur réduite pour le menu */
             height: 100vh; /* Hauteur pleine */
             position: fixed; /* Fixe le menu à gauche */
+          /*  border-radius: 5px; /* Coins arrondis */
         }
         .menu a {
             margin: 15px 0; /* Espacement vertical */
@@ -70,11 +70,12 @@ session_start(); // Assurez-vous que la session est démarrée
         }
         main {
             margin-left: 200px; /* Décalage pour le menu à gauche */
-            padding: 5px;
+            padding:5px;
         }
-        img {
+        img{
             width: 100px;
             height: 80px;
+
         }
         .reg {
             background-color: #55522a;
@@ -93,20 +94,12 @@ session_start(); // Assurez-vous que la session est démarrée
 <body>
 
 <header>
-    <img src="images/logow_bgf.ico" alt="Logo">
+    <img src="images/logow_bgf.ico" alt="">
 
-    <div style="display: flex; align-items: center;">
-        <i class="fas fa-user" style="color:white; margin-right: 10px;"></i>
-        <?php if (isset($_SESSION['username'])): ?>
-            <span style="color: white; margin-right: 20px;"><?php echo htmlspecialchars($_SESSION['username']); ?></span>
-        <?php endif; ?>
-        <a href="Régister.php">
-            <button class="reg">S'inscrire</button>
+    <a href="Régister.php"><i class="fas fa-registered" style="color:dark;"><button class="reg">S'inscrire </button></i>
+    <a href="Logout.php"><button class="logout">Déconnexion</button></a>
+            
         </a>
-        <a href="Logout.php">
-            <button class="logout">Déconnexion</button>
-        </a>
-    </div>
 </header>
 
 <nav>
@@ -116,29 +109,32 @@ session_start(); // Assurez-vous que la session est démarrée
             Clients
         </a>
         <a href="affichecompte.php">
-            <i class="fas fa-piggy-bank" style="color:purple; font-size:22px;"></i>
+           <i class="fas fa-piggy-bank" style="color:purple; font-size:22px;"></i>
             Compte
         </a>
         <a href="affichedossier.php">
             <i class="fas fa-folder-open"></i>
-            Dossier de recouvrement
+            Dossier de decouvrement
         </a>
         <a href="affichecredit1.php">
             <i class="fas fa-credit-card" style="color:darkgreen; font-size:22px;"></i>
-            Crédit
+            Credit
         </a>
-        <a href="afficheecheance.php">
+         <a href="afficheecheance.php">
             <i class="fas fa-calendar-alt" style="color:darkred; font-size:22px;"></i>
-            Échéances
+            Echeances 
         </a>
-        <a href="historique.php">
-            <i class="fas fa-history" style="color:darkorange; font-size:22px;"></i>
-            Historique
+        
+         <a href="historique.php">
+             <i class="fas fa-history" style="color:darkorange; font-size:22px;"></i>
+            Historique 
         </a>
+        
         <a href="Régister.php">
-            <i class="fas fa-registered" style="color:dark;"></i>
-            S'inscrire
-        </a>  
+             <i class="fas fa-registered" style="color:dark;"></i>
+            S'inscrire 
+        </a>
+        
     </div>
 </nav>
 <main>

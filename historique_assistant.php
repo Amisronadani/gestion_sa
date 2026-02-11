@@ -190,7 +190,7 @@ include('index_assistant.php');
                 <th>Montant paye</th>
                 <th>Montant restant</th>
                 <th>Montant tetal deja paye</th>
-                <th>Actions</th>
+                
             </tr>
         </thead>
         <tbody id="clientList">
@@ -202,11 +202,7 @@ include('index_assistant.php');
                     <td><?= $historique['montant_paye'] ?> Fbu</td>
                     <td><?= $historique['montant_restant'] ?></td>
                     <td><?= $historique['montant_total_p'] ?></td>
-                    <td>
-                    <form action="?id=<?= $historique['idhisto'] ?>" method="POST" style="display:inline;">
-                            <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce compte ?');" class="delete">🗑️ Supprimer</button>
-                        </form>
-                    </td>
+                    
                 </tr>
             <?php endforeach; ?>
         </tbody>

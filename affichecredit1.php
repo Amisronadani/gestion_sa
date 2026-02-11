@@ -1,5 +1,4 @@
 <?php
-session_start();
 require 'connexion.php'; // Assurez-vous de vous connecter à votre base de données
 
 //Configuration de la pagination
@@ -12,8 +11,15 @@ if ($page < 1) {
 
 $offset = ($page - 1) * $limit;
 // Récupérer les crédits
-$stmt = $pdo->query("SELECT * FROM credit LIMIT $limit OFFSET $offset");
+$stmt = $pdo->query("SELECT * FROM credit join dossier_de_recouvrement  ON credit.id_dossier = dossier_de_recouvrement.id_dossier LIMIT $limit OFFSET $offset");
 $credits = $stmt->fetchAll(PDO::FETCH_ASSOC);
+foreach ($credits as $credit): 
+$date_de_cloture= new DateTime($credit['date_de_cloture']);
+$date_actuelle=new DateTime();
+    if ($date_actuelle > $date_de_cloture) {
+        $_SESSION['date_passe'] = "Attention : Le paiement du crédit numéro {$credit['numero_credit']} est en retard ,veuillez contactez le client du numero du compte {$credit['numero_compte']}";
+    }
+endforeach; 
 
 // Récupérer le nombre total d'éléments
 $total_query = "SELECT COUNT(*) FROM credit";
@@ -145,12 +151,59 @@ $total_pages = ceil($total_items / $limit);
     background-color:#721c24;
     color: white;
 }
+.alert {
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    position: relative;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.alert-message {
+    flex-grow: 1;
+}
+
+.alert button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: inherit;
+    cursor: pointer;
+    margin-left: 15px;
+    transition: color 0.3s;
+}
+
+.alert button:hover {
+    color: #721c24;
+}
 </style>
 </head>
 <body>
 
 <?php
-include('index_assistant.php');
+include('index1.php');
 ?>
 <main>
 <div class="container mt-3">
@@ -168,6 +221,26 @@ if (isset($_SESSION['error'])) {
 </div>
 
      <h1>Gestion des <span>Credit</span></></h1>
+
+<?php
+if (isset($_SESSION['date_passe'])) {
+    echo "<div class='alert alert-success' role='alert'>
+            <div class='alert-title'>Succès :</div>
+            <div class='alert-message'>{$_SESSION['date_passe']}</div>
+            <button onclick=\"this.parentElement.style.display='none';\">✖️</button>
+          </div>";
+    unset($_SESSION['date_passe']);
+}
+
+if (isset($_SESSION['depassement'])) {
+    echo "<div class='alert alert-danger' role='alert'>
+            <div class='alert-title'>Attention :</div>
+            <div class='alert-message'>{$_SESSION['depassement']}</div>
+            <button onclick=\"this.parentElement.style.display='none';\">✖️</button>
+          </div>";
+    unset($_SESSION['depassement']);
+}
+?>
     <a href="addcredit.php" class="ajouter">➕ Ajout Quelque qui demande un credit</a>
     <input type="text" id="search" placeholder="Rechercher...">
 

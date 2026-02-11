@@ -1,8 +1,6 @@
 <?php
 require 'connexion.php';
 
-session_start();
-
 // Vérifier si l'ID du compte est passé et si la méthode est POST pour la suppression
 if (isset($_GET['id']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $numero = $_GET['id'];

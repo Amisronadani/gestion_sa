@@ -1,8 +1,6 @@
 <?php
 require 'connexion.php';
 
-session_start();
-
 // Vérifier si l'ID du compte est passé et si la méthode est POST pour la suppression
 if (isset($_GET['id']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_GET['id'];
@@ -241,7 +239,8 @@ if (isset($_SESSION['error'])) {
 
     <?php if ($page < $total_pages): ?>
         <a href="?page=<?php echo $page + 1; ?>">Suivant</a>
-    <?php endif; ?>
+    <?php endif;
+    ?>
 </div>
 </main>
 

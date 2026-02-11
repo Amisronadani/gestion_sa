@@ -1,56 +1,56 @@
 <?php
 session_start();
-include 'connexion.php';
+require 'connexion.php';
 
-// Redirection si l'utilisateur est déjà connecté
+// Redirection si déjà connecté
 if (isset($_SESSION['username'])) {
     if ($_SESSION['role'] === 'decouvert') {
         header("Location: index1.php");
-        exit();
     } else {
         header("Location: accueil.php");
-        exit();
     }
+    exit();
 }
 
-// Initialisation de la variable d'erreur
 $erreur = '';
 
 if (isset($_POST['Connex'])) {
+
     $username = $_POST['nom_utilisateur'];
     $password = $_POST['mot_de_passe'];
 
-    // Préparer et exécuter la requête SQL
-    $sql = "SELECT * FROM utilisateurs WHERE nom_utilisateur = :nom_utilisateur";
+    $sql = "SELECT * FROM utilisateurs WHERE nom_utilisateur = :nom";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':nom_utilisateur', $username, PDO::PARAM_STR);
-    $stmt->execute();
+    $stmt->execute(['nom' => $username]);
 
-    if ($stmt->rowCount() === 1) {
-        $user = $stmt->fetch(PDO::FETCH_BOTH); // Utiliser FETCH_BOTH
+    if ($stmt->rowCount() == 1) {
 
-        // Vérifiez que le mot de passe est correct
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
         if (password_verify($password, $user['mot_de_passe'])) {
-            // Connexion réussie
+
+            session_regenerate_id(true);
+
             $_SESSION['username'] = $user['nom_utilisateur'];
             $_SESSION['role'] = $user['role'];
 
-            // Redirection en fonction du rôle
             if ($user['role'] === 'decouvert') {
                 header("Location: index1.php");
-                exit();
             } else {
                 header("Location: accueil.php");
-                exit();
             }
+            exit();
+
         } else {
             $erreur = "Mot de passe incorrect.";
         }
+
     } else {
         $erreur = "Nom d'utilisateur introuvable.";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -140,7 +140,8 @@ if (isset($_POST['Connex'])) {
     </div>
 	
     <div class="links">
-      <a href="forgot_password.php">Mot de passe oublié ?</a>
+     /<!--- <a href="forgot_password.php">Mot de passe oublié ?</a>-->
+      
     </div>
   </div>
 

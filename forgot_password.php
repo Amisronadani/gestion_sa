@@ -1,31 +1,44 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "car");
+require 'connexion.php';
 
-// Vérifiez la connexion
-if ($conn->connect_error) {
-    die("Erreur de connexion : " . $conn->connect_error);
-}
+$message = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $conn->real_escape_string(trim($_POST['email']));
+
+    $email = trim($_POST['email']);
+
     $token = bin2hex(random_bytes(50));
     $expire = date("Y-m-d H:i:s", strtotime('+1 hour'));
 
-    $check = $conn->query("SELECT * FROM utilisateurs WHERE nom_utilisateur='$email'");
-    if ($check && $check->num_rows > 0) {
-        $conn->query("UPDATE users SET reset_token='$token', reset_expire='$expire' WHERE nom_utilisateur='$email'");
+    $sql = "SELECT * FROM utilisateurs WHERE nom_utilisateur = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$email]);
 
-        $resetLink = "http://localhost/reset_password.php?token=$token";
+    if ($stmt->rowCount() > 0) {
 
-        // Simulation d'envoi email (ici juste affichage)
-        echo "Un lien de réinitialisation a été envoyé : <a href='$resetLink'>$resetLink</a>";
+        $update = $pdo->prepare("
+            UPDATE utilisateurs 
+            SET reset_token = ?, 
+                token_expiration = ?
+            WHERE nom_utilisateur = ?
+        ");
+
+        $update->execute([$token, $expire, $email]);
+
+        $link = "http://localhost/reset_password.php?token=$token";
+
+        $message = "Lien envoyé : <a href='$link'>$link</a>";
+
     } else {
-        echo "Aucun compte trouvé avec cet email.";
+        $message = "Aucun compte trouvé.";
     }
 }
 ?>
 
 <form method="POST">
+    <h3>Mot de passe oublié</h3>
     <input type="email" name="email" placeholder="Votre email" required>
     <button type="submit">Envoyer</button>
 </form>
+
+<p><?= $message ?></p>

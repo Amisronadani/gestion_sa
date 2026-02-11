@@ -39,6 +39,12 @@ $client=$info_client['nom']." ".$info_client['prenom'];
         if ($compte_info) {
             // Calculer le nouveau montant restant
             $nouveau_montant_restant = $compte_info['montant'] - $montant_du;
+            if($nouveau_montant_restant == 0) {
+                  $_SESSION['credit_paye']="Le crédit du compte $numero_credit a été entièrement payé avec success.";
+            }elseif($nouveau_montant_restant < 0){
+                  $_SESSION['depassement']="Le montant payé dépasse le montant restant du crédit.";
+                  exit();
+            }
 
             // Mettre à jour la colonne montant_restant dans la table compte
             $stmt = $pdo->prepare("UPDATE credit SET montant_restant = ? WHERE numero_credit = ?");
